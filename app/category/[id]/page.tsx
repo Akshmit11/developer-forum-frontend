@@ -34,7 +34,7 @@ interface Category {
 }
 
 // This remains an async Server Component
-export default async function CategoryPage({ params }: { params: { id: string } }) {
+export default async function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
 
   const { id } = await params // Directly access id, no need for await params
 
