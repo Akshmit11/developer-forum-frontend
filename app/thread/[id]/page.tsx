@@ -1,13 +1,4 @@
-// Remove "use client" directive and client-side imports/hooks
-
-// Keep necessary imports for server-side logic or passing data
 import { ThreadClient } from "@/components/shared/ThreadClient" // Import the new client component
-
-interface ThreadPageProps {
-  params: {
-    id: string
-  }
-}
 
 // This is now a Server Component
 export default async function ThreadPage({ params }: { params: Promise<{ id: string }> }) {
