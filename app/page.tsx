@@ -1,103 +1,207 @@
-import Image from "next/image";
+"use client"
+
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { Search } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Header } from "@/components/shared/Header"
+import { CategoryCard } from "@/components/shared/CategoryCard"
+import { TrendingTopics } from "@/components/shared/TrendingTopics"
+import Image from "next/image"
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const categories = [
+    {
+      id: 1,
+      title: "Design Systems",
+      description: "Explore component libraries, design tokens, and system architecture",
+      posts: 324,
+      color: "bg-[#F9F5FF]",
+      borderColor: "border-[#E4D7FF]",
+      icon: "🎨",
+      iconBg: "bg-[#F4EBFF]",
+    },
+    {
+      id: 2,
+      title: "JavaScript",
+      description: "Discuss modern JavaScript, TypeScript, and frontend frameworks",
+      posts: 256,
+      color: "bg-[#FEF7E6]",
+      borderColor: "border-[#FEEBC1]",
+      icon: "🟨",
+      iconBg: "bg-[#FFFAEB]",
+    },
+    {
+      id: 3,
+      title: "React & Next.js",
+      description: "Share experiences with React, Next.js, and the React ecosystem",
+      posts: 189,
+      color: "bg-[#EFF8FF]",
+      borderColor: "border-[#D1E9FF]",
+      icon: "⚛️",
+      iconBg: "bg-[#F0F9FF]",
+    },
+    {
+      id: 4,
+      title: "UI/UX Design",
+      description: "Discuss user interfaces, experiences, and design principles",
+      posts: 142,
+      color: "bg-[#F8F0FC]",
+      borderColor: "border-[#F5D0FE]",
+      icon: "🖌️",
+      iconBg: "bg-[#FAF5FF]",
+    },
+    {
+      id: 5,
+      title: "Backend Development",
+      description: "Talk about APIs, databases, and server-side technologies",
+      posts: 118,
+      color: "bg-[#ECFDF3]",
+      borderColor: "border-[#ABEFC6]",
+      icon: "🖥️",
+      iconBg: "bg-[#F0FDF4]",
+    },
+    {
+      id: 6,
+      title: "Career Growth",
+      description: "Share advice on job hunting, interviews, and professional development",
+      posts: 97,
+      color: "bg-[#FFF1F2]",
+      borderColor: "border-[#FECDD3]",
+      icon: "💼",
+      iconBg: "bg-[#FFF1F2]",
+    },
+  ]
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+
+      <main className="container mx-auto px-4 py-12 max-w-6xl">
+        <motion.div
+          className="mb-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-4xl font-bold tracking-tight mb-3 text-zinc-900">Discussions for developers</h1>
+          <p className="text-zinc-500 max-w-2xl mx-auto text-lg">
+            Join our community to ask questions, share ideas, and connect with fellow developers.
+          </p>
+        </motion.div>
+
+        <div className="flex flex-col lg:flex-row gap-12">
+          <div className="lg:w-3/4">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-xl font-semibold text-zinc-900">Browse Categories</h2>
+              <div className="relative w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-zinc-400" />
+                <Input placeholder="Search categories" className="pl-10 bg-zinc-50 border-zinc-200 rounded-full h-10" />
+              </div>
+            </div>
+
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+              variants={container}
+              initial="hidden"
+              animate="show"
+            >
+              {categories.map((category) => (
+                <motion.div key={category.id} variants={item}>
+                  <CategoryCard category={category} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          <div className="lg:w-1/4">
+            <TrendingTopics />
+
+            <div className="mt-12">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-zinc-900">Top Contributors</h2>
+              </div>
+
+              <div className="space-y-5">
+                {[1, 2, 3].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="flex items-center gap-3"
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Avatar className="h-10 w-10 border border-zinc-100">
+                      <AvatarImage src={`https://github.com/shadcn.png`} alt={`User ${i}`} />
+                      <AvatarFallback>U{i}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <p className="font-medium text-zinc-900">Alex Johnson</p>
+                        <Badge variant="outline" className="bg-zinc-50 text-xs">
+                          {120 - i * 20} posts
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-zinc-500">Full-stack Developer</p>
+                    </div>
+                  </motion.div>
+                ))}
+
+                <Button variant="ghost" className="w-full text-zinc-500 hover:text-zinc-900 mt-2">
+                  View all members
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="border-t border-zinc-100 mt-16">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Image 
+                src={'/forum-logo.svg'}
+                alt="Forum Logo"
+                width={40}
+                height={40}
+              />
+              <span className="text-zinc-500 text-sm">© 2025 Forum</span>
+            </div>
+            <div className="flex gap-6 text-sm">
+              <Link href="#" className="text-zinc-500 hover:text-zinc-900 transition-colors">
+                About
+              </Link>
+              <Link href="#" className="text-zinc-500 hover:text-zinc-900 transition-colors">
+                Terms
+              </Link>
+              <Link href="#" className="text-zinc-500 hover:text-zinc-900 transition-colors">
+                Privacy
+              </Link>
+              <Link href="https://x.com/aksh_mit00" className="text-zinc-500 hover:text-zinc-900 transition-colors">
+                X
+              </Link>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
