@@ -192,8 +192,8 @@ export default function Home() {
               <Link href="#" className="text-zinc-500 hover:text-zinc-900 transition-colors">
                 Terms
               </Link>
-              <Link href="#" className="text-zinc-500 hover:text-zinc-900 transition-colors">
-                Privacy
+              <Link href="mailto:saxena.akshmit@gmail.com" className="text-zinc-500 hover:text-zinc-900 transition-colors">
+                Email
               </Link>
               <Link href="https://x.com/aksh_mit00" className="text-zinc-500 hover:text-zinc-900 transition-colors">
                 X
